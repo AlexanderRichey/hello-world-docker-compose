@@ -1,19 +1,21 @@
 version: '3'
+
 services:
-  db:
+  postgres:
     image: postgres:10.1-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - '5432'
-  web:
+  django:
     build: .
     command: python3 manage.py runserver 0.0.0.0:8000
     volumes:
-      - .:/code
+      - .:/var/www
     ports:
       - '8000:8000'
     depends_on:
-      - db
+      - postgres
+
 volumes:
   postgres_data:
